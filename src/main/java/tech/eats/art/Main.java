@@ -21,11 +21,7 @@ public class Main {
         Map<String, Integer> words = new HashMap<>();
         HiveService hService = new HiveService();
 
-        Statement stmt = hService.getStatement();
-        //Let mapreduce do most of the word count. Clean up later
-        String sql = ("SELECT word,COUNT(1) AS count FROM (SELECT explode(split(text, '[ \\n]')) AS word FROM json_table)" +
-                " tempTable GROUP BY word ORDER BY count DESC");
-        ResultSet res = stmt.executeQuery(sql);
+        ResultSet res = hService.getWordCounts();
 
         String current = "";
         int currentCount = 0;

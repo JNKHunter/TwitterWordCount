@@ -1,9 +1,6 @@
 package tech.eats.art;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Created by jhunter on 1/22/17.
@@ -32,6 +29,15 @@ public class HiveService {
         }
 
     }
+
+    public ResultSet getWordCounts() throws SQLException {
+        //Let mapreduce do most of the word count. Clean up later
+        String sql = ("SELECT word,COUNT(1) AS count FROM (SELECT explode(split(text, '[ \\n]')) AS word FROM json_table)" +
+                " tempTable GROUP BY word ORDER BY count DESC");
+        return getStatement().executeQuery(sql);
+    }
+
+
 
     public Statement getStatement() throws SQLException {
         return getConnection().createStatement();
