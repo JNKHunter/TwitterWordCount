@@ -11,6 +11,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="hive-exec-2.1.1" level="project" />
+    <orderEntry type="library" name="hive-jdbc-2.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hive:hive-jdbc:2.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hive:hive-common:2.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hive:hive-storage-api:2.1.1" level="project" />
@@ -210,7 +212,6 @@
     <orderEntry type="library" name="Maven: org.apache.curator:curator-framework:2.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.curator:curator-client:2.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.10" level="project" />
-    <orderEntry type="library" name="hive-exec-2.1.1" level="project" />
-    <orderEntry type="library" name="hive-jdbc-2.1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.kennycason:kumo:1.8" level="project" />
   </component>
 </module>

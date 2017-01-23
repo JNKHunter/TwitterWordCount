@@ -5,23 +5,41 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by jhunter on 1/22/17.
  */
 public class WordMapper {
 
+    private static List<String> blacklist = Arrays.asList(new String[]{"the", "and", "for", "this", "from", "that", "when",
+            "with", "did", "its", "it's", "but" });
+
     public static String normalizeString(String theString){
         theString = theString.toLowerCase();
         theString = theString.trim();
-        theString = theString.replaceAll("^[ #.,!]", "");
-        theString = theString.replaceAll("[ #.,!]$", "");
+        theString = theString.replaceAll("^[ #().:;,!?+\"\']+", "");
+        theString = theString.replaceAll("[ #().,:;!?+\"\']+$", "");
         theString = theString.replaceAll("(\\r|\\n)", "");
 
         return theString;
+    }
+
+    public static boolean isUsableWord(String theString){
+
+        if(blacklist.contains(theString)){
+            return false;
+        }
+
+        if(theString.startsWith("http")){
+            return false;
+        }
+
+        if(theString.length() < 3){
+            return false;
+        }
+
+        return true;
     }
 
 
@@ -37,7 +55,7 @@ public class WordMapper {
             current = WordMapper.normalizeString(current);
 
             //Min length for a word to get saved into map
-            if(current.length() >= 3){
+            if(isUsableWord(current)){
                 if(!words.containsKey(current)) {
                     words.put(current,currentCount);
                 }else{
@@ -77,8 +95,11 @@ public class WordMapper {
             PrintWriter pw = new PrintWriter(new File("words.txt"));
             StringBuilder sb = new StringBuilder();
             while(res.next()){
-                sb.append(WordMapper.normalizeString(res.getString("word")));
-                sb.append(" ");
+                if(isUsableWord(res.getString("word"))){
+                    sb.append(WordMapper.normalizeString(res.getString("word")));
+                    sb.append(" ");
+                }
+
             }
 
             pw.write(sb.toString());

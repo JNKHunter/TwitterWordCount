@@ -45,3 +45,7 @@ fabric.properties
 
 target
 
+word_counts.csv
+words.txt
+wordcloud_rectangle.png
+
