@@ -27,7 +27,6 @@ public class HiveService {
             con = DriverManager.getConnection("jdbc:hive2://localhost:10000/default", "jhunter", "");
             return con;
         }
-
     }
 
     public ResultSet getWordCounts() throws SQLException {
@@ -37,6 +36,10 @@ public class HiveService {
         return getStatement().executeQuery(sql);
     }
 
+    public ResultSet getWords() throws SQLException{
+        String sql = ("SELECT explode(split(text, '[ \\n]')) AS word FROM json_table");
+        return getStatement().executeQuery(sql);
+    }
 
 
     public Statement getStatement() throws SQLException {

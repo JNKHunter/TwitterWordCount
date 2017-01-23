@@ -22,42 +22,9 @@ public class Main {
         HiveService hService = new HiveService();
 
         ResultSet res = hService.getWordCounts();
+        words = WordMapper.mapWords(res);
 
-        String current = "";
-        int currentCount = 0;
-
-        while(res.next()){
-            //Normalize word
-            current = res.getString("word");
-            currentCount = res.getInt("count");
-            current = WordMapper.normalizeString(current);
-
-            if(!words.containsKey(current)) {
-                words.put(current,currentCount);
-            }else{
-                words.put(current, words.get(current) + currentCount);
-            }
-        }
-
-        Iterator it = words.entrySet().iterator();
-
-        /*try {
-            PrintWriter pw = new PrintWriter(new File("word_counts.csv"));
-            StringBuilder sb  = new StringBuilder();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                sb.append(pair.getKey());
-                sb.append(",");
-                sb.append(pair.getValue());
-                sb.append("\n");
-            }
-
-            pw.write(sb.toString());
-            pw.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }*/
+        WordMapper.writeOutWordCounts(words);
 
         hService.closeConnection();
     }
