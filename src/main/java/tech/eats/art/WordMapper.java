@@ -16,7 +16,9 @@ public class WordMapper {
 
     public static String normalizeString(String theString){
         theString = theString.toLowerCase();
-        theString = theString.replaceAll("^[ #@]", "");
+        theString = theString.trim();
+        theString = theString.replaceAll("^[ #.,!]", "");
+        theString = theString.replaceAll("[ #.,!]$", "");
         theString = theString.replaceAll("(\\r|\\n)", "");
 
         return theString;
@@ -34,10 +36,13 @@ public class WordMapper {
             currentCount = res.getInt("count");
             current = WordMapper.normalizeString(current);
 
-            if(!words.containsKey(current)) {
-                words.put(current,currentCount);
-            }else{
-                words.put(current, words.get(current) + currentCount);
+            //Min length for a word to get saved into map
+            if(current.length() >= 3){
+                if(!words.containsKey(current)) {
+                    words.put(current,currentCount);
+                }else{
+                    words.put(current, words.get(current) + currentCount);
+                }
             }
         }
         return words;
