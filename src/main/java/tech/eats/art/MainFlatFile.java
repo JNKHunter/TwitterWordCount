@@ -24,15 +24,15 @@ import java.util.Map;
 public class MainFlatFile {
     public static void main(String[] args) throws SQLException, IOException {
         HiveService hService = new HiveService();
-        FilePrinter.writeOutFlatWords(hService.getWords());
+        String words = WordMapper.resultSetToTokenString(hService.getWords(), " ");
+        FilePrinter.writeOutFile(words, "words.txt");
         hService.closeConnection();
-
 
         final FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
         frequencyAnalyzer.setWordFrequenciesToReturn(1200);
         final List<WordFrequency> wordFrequencies = frequencyAnalyzer.load("words.txt");
         final Dimension dimension = new Dimension(1080, 1080);
-        final WordCloud wordCloud = new WordCloud(dimension, CollisionMode.PIXEL_PERFECT);
+        final WordCloud wordCloud = new WordCloud(dimension, CollisionMode.RECTANGLE);
         wordCloud.setPadding(0);
         wordCloud.setBackground(new RectangleBackground(dimension));
         wordCloud.setColorPalette(new ColorPalette(new Color(0xE65100), new Color(0xEF6C00),

@@ -36,22 +36,10 @@ public class FilePrinter {
         }
     }
 
-    public static void writeOutFlatWords(ResultSet res) throws SQLException {
+    public static void writeOutFile(String theString, String fileName) throws SQLException {
         try{
-            PrintWriter pw = new PrintWriter(new File("words.txt"));
-            StringBuilder sb = new StringBuilder();
-            String current = "";
-
-            while(res.next()){
-                current = WordMapper.normalizeString(res.getString("word"));
-
-                if(WordMapper.isUsableWord(current)){
-                    sb.append(current);
-                    sb.append(" ");
-                }
-            }
-
-            pw.write(sb.toString());
+            PrintWriter pw = new PrintWriter(new File(fileName));
+            pw.write(theString);
             pw.close();
         } catch (FileNotFoundException e){
             e.printStackTrace();

@@ -67,7 +67,21 @@ public class WordMapper {
         return words;
     }
 
+    public static String resultSetToTokenString(ResultSet res, String token) throws SQLException {
 
+        StringBuilder sb = new StringBuilder();
+        String current = "";
 
+        while (res.next()) {
+            current = WordMapper.normalizeString(res.getString("word"));
+
+            if (WordMapper.isUsableWord(current)) {
+                sb.append(current);
+                sb.append(token);
+            }
+        }
+
+        return sb.toString();
+    }
 
 }
