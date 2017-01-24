@@ -67,6 +67,21 @@ public class WordMapper {
         return words;
     }
 
+    public static String mapToCsvString(Map<String, Integer> wordCounts){
+        Iterator it = wordCounts.entrySet().iterator();
+
+        StringBuilder sb  = new StringBuilder();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            sb.append(pair.getKey());
+            sb.append(",");
+            sb.append(pair.getValue());
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
+
     public static String resultSetToTokenString(ResultSet res, String token) throws SQLException {
 
         StringBuilder sb = new StringBuilder();

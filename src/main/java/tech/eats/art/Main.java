@@ -18,8 +18,9 @@ public class Main {
 
         ResultSet res = hService.getWordCounts();
         words = WordMapper.mapWords(res);
+        String csv = WordMapper.mapToCsvString(words);
 
-        FilePrinter.writeOutWordCounts(words);
+        FilePrinter.writeOutFile(csv, "word_counts.csv");
 
         hService.closeConnection();
     }
