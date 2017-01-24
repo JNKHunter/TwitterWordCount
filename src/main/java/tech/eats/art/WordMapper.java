@@ -13,7 +13,8 @@ import java.util.*;
 public class WordMapper {
 
     private static List<String> blacklist = Arrays.asList(new String[]{"the", "and", "for", "this", "from", "that", "when",
-            "with", "did", "its", "it's", "but" });
+            "with", "did", "its", "it's", "but", "are", "was", "&amp" });
+
 
     public static String normalizeString(String theString){
         theString = theString.toLowerCase();
@@ -67,46 +68,6 @@ public class WordMapper {
     }
 
 
-    public static void writeOutWordCounts(Map<String, Integer> words){
 
-        Iterator it = words.entrySet().iterator();
-
-        try {
-            PrintWriter pw = new PrintWriter(new File("word_counts.csv"));
-            StringBuilder sb  = new StringBuilder();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                sb.append(pair.getKey());
-                sb.append(",");
-                sb.append(pair.getValue());
-                sb.append("\n");
-            }
-
-            pw.write(sb.toString());
-            pw.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void writeOutFlatWords(ResultSet res) throws SQLException {
-        try{
-            PrintWriter pw = new PrintWriter(new File("words.txt"));
-            StringBuilder sb = new StringBuilder();
-            while(res.next()){
-                if(isUsableWord(res.getString("word"))){
-                    sb.append(WordMapper.normalizeString(res.getString("word")));
-                    sb.append(" ");
-                }
-
-            }
-
-            pw.write(sb.toString());
-            pw.close();
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-    }
 
 }

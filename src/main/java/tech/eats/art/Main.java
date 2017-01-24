@@ -19,7 +19,7 @@ public class Main {
         ResultSet res = hService.getWordCounts();
         words = WordMapper.mapWords(res);
 
-        WordMapper.writeOutWordCounts(words);
+        FilePrinter.writeOutWordCounts(words);
 
         hService.closeConnection();
     }

@@ -24,19 +24,19 @@ import java.util.Map;
 public class MainFlatFile {
     public static void main(String[] args) throws SQLException, IOException {
         HiveService hService = new HiveService();
-        WordMapper.writeOutFlatWords(hService.getWords());
+        FilePrinter.writeOutFlatWords(hService.getWords());
         hService.closeConnection();
 
 
         final FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
-        frequencyAnalyzer.setWordFrequenciesToReturn(600);
+        frequencyAnalyzer.setWordFrequenciesToReturn(1200);
         final List<WordFrequency> wordFrequencies = frequencyAnalyzer.load("words.txt");
         final Dimension dimension = new Dimension(1080, 1080);
-        final WordCloud wordCloud = new WordCloud(dimension, CollisionMode.RECTANGLE);
+        final WordCloud wordCloud = new WordCloud(dimension, CollisionMode.PIXEL_PERFECT);
         wordCloud.setPadding(0);
         wordCloud.setBackground(new RectangleBackground(dimension));
-        wordCloud.setColorPalette(new ColorPalette(new Color(0x4055F1), new Color(0x408DF1),
-                new Color(0x40AAF1), new Color(0x40C5F1), new Color(0x40D3F1), new Color(0xFFFFFF)));
+        wordCloud.setColorPalette(new ColorPalette(new Color(0xE65100), new Color(0xEF6C00),
+                new Color(0xF57C00), new Color(0xFB8C00), new Color(0xFF9800), new Color(0xFFA726)));
         wordCloud.setFontScalar(new SqrtFontScalar(10, 100));
         wordCloud.build(wordFrequencies);
         wordCloud.writeToFile("wordcloud_rectangle.png");
