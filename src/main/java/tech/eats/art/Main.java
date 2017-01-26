@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class Main {
 
-    public static void main(String[] args) throws SQLException{
+    public static void main(String[] args) throws SQLException {
         Map<String, Integer> words = new HashMap<>();
         HiveService hService = new HiveService();
 
@@ -20,7 +20,7 @@ public class Main {
         words = WordMapper.mapWords(res);
         String csv = WordMapper.mapToCsvString(words);
 
-        FilePrinter.writeOutFile(csv, "word_counts.csv");
+        FileWriter.writeOutFile(csv, "word_counts.csv");
 
         hService.closeConnection();
     }

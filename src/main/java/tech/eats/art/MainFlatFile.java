@@ -3,20 +3,15 @@ package tech.eats.art;
 import com.kennycason.kumo.CollisionMode;
 import com.kennycason.kumo.WordCloud;
 import com.kennycason.kumo.WordFrequency;
-import com.kennycason.kumo.bg.PixelBoundryBackground;
 import com.kennycason.kumo.bg.RectangleBackground;
-import com.kennycason.kumo.font.scale.LinearFontScalar;
 import com.kennycason.kumo.font.scale.SqrtFontScalar;
 import com.kennycason.kumo.nlp.FrequencyAnalyzer;
 import com.kennycason.kumo.palette.ColorPalette;
 
 import java.awt.*;
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by jhunter on 1/22/17.
@@ -25,7 +20,7 @@ public class MainFlatFile {
     public static void main(String[] args) throws SQLException, IOException {
         HiveService hService = new HiveService();
         String words = WordMapper.resultSetToTokenString(hService.getWords(), " ");
-        FilePrinter.writeOutFile(words, "words.txt");
+        FileWriter.writeOutFile(words, "words.txt");
         hService.closeConnection();
 
         final FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();

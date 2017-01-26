@@ -11,19 +11,19 @@ public class HiveService {
     private Statement statement;
     private String driverName = "org.apache.hive.jdbc.HiveDriver";
 
-    public HiveService(){
-        try{
+    public HiveService() {
+        try {
             Class.forName(driverName);
-        } catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
             System.exit(1);
         }
     }
 
     public Connection getConnection() throws SQLException {
-        if(con != null){
+        if (con != null) {
             return con;
-        }else{
+        } else {
             con = DriverManager.getConnection("jdbc:hive2://localhost:10000/default", "jhunter", "");
             return con;
         }
@@ -36,7 +36,7 @@ public class HiveService {
         return getStatement().executeQuery(sql);
     }
 
-    public ResultSet getWords() throws SQLException{
+    public ResultSet getWords() throws SQLException {
         String sql = ("SELECT explode(split(text, '[ \\n]')) AS word FROM json_table");
         return getStatement().executeQuery(sql);
     }
@@ -47,7 +47,7 @@ public class HiveService {
     }
 
     public void closeConnection() throws SQLException {
-        if(con != null){
+        if (con != null) {
             con.close();
         }
     }
